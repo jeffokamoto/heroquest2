@@ -1,0 +1,93 @@
+<!doctype html>
+<head>
+<title>HeroQuest 2 Rating Comparator</title>
+<link rel="stylesheet" type="text/css" href="hq2.css" />
+</head>
+<body>
+<h1>HeroQuest 2 Rating Comparator</h1>
+
+<table id="inputs">
+<tr>
+<td><span class="rating">Player A Rating:</span></td><td><input type="text" id="a_rating" size="4"></td><td id="error_a_rating"></td>
+</tr>
+<tr>
+<td><span class="mastery">Player A Masteries:</span></td><td><input type="text" id="a_mastery" size="4"></td><td id="error_a_mastery"></td>
+</tr>
+<tr>
+<td><span class="rating">Player B Rating:</span></td><td><input type="text" id="b_rating" size="4"></td><td id="error_b_rating"></td>
+</tr>
+<tr>
+<td><span class="mastery">Player B Masteries:</span></td><td><input type="text" id="b_mastery" size="4"></td><td id="error_b_mastery"></td>
+</tr>
+</table>
+<p>
+<input type="button" value="Compare Ratings" id="compare">
+</p>
+<div id="results"></div>
+
+<script src="hq2.js"></script>
+<script type="text/javascript">
+	var btn = document.getElementById('compare');
+
+	btn.onclick = function() {
+		var a_rating = document.getElementById('a_rating').value;
+		var a_mastery = document.getElementById('a_mastery').value;
+		var b_rating = document.getElementById('b_rating').value;
+		var b_mastery = document.getElementById('b_mastery').value;
+
+		var okay = check_values(a_rating, a_mastery, b_rating, b_mastery);
+
+		if (okay == 1) {
+			var results_html = run_simulation(a_rating, a_mastery, b_rating, b_mastery);
+			var elem = document.getElementById('results');
+			elem.innerHTML = results_html;
+		}
+	}
+
+	function clear_areas() {
+		var area;
+
+		area = document.getElementById('error_a_rating');
+		area.innerHTML = '&nbsp;';
+		area = document.getElementById('error_a_mastery');
+		area.innerHTML = '&nbsp;';
+		area = document.getElementById('error_b_rating');
+		area.innerHTML = '&nbsp;';
+		area = document.getElementById('error_b_mastery');
+		area.innerHTML = '&nbsp;';
+
+		area = document.getElementById('results');
+		area.innerHTML = '&nbsp;';
+	}
+
+	function check_values(a_rating, a_mastery, b_rating, b_mastery) {
+		
+		var okay = 1;
+
+		clear_areas();
+		if (a_rating < 1 || a_rating > 20) {
+			error = document.getElementById('error_a_rating');
+			error.innerHTML = '<span class="error">Rating must be between 1 and 20</span>';
+			okay = 0;
+		}
+		if (a_mastery < 0) {
+			error = document.getElementById('error_a_mastery');
+			error.innerHTML = '<span class="error">Masteries cannot be less than 0</span>';
+			okay = 0;
+		}
+		if (b_rating < 1 || b_rating > 20) {
+			error = document.getElementById('error_b_rating');
+			error.innerHTML = '<span class="error">Rating must be between 1 and 20</span>';
+			okay = 0;
+		}
+		if (b_mastery < 0) {
+			error = document.getElementById('error_b_mastery');
+			error.innerHTML = '<span class="error">Masteries cannot be less than 0</span>';
+			okay = 0;
+		}
+
+		return okay;
+	}
+</script>
+</body>
+</html>

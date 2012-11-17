@@ -1,0 +1,21 @@
+table.results, table.results th, table.results td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+th, td {
+	padding: 5px;
+}
+.victory {
+	text-align: left;
+}
+.num, .percent {
+	text-align: right;
+}
+.cumul {
+	text-align: right;
+	vertical-align: center;
+}
+.error {
+	text-align: left;
+	color: red;
+}
