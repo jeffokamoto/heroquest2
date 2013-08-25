@@ -53,45 +53,68 @@ function run_simulation(a_rating, a_mastery, b_rating, b_mastery) {
 	var victory;
 	var results = [];
 	var i;
-	var res = "";
+	var source   = $("#result-template").html();
+	var template = Handlebars.compile(source);
+	var results_html = '';
+
 
 	for (i = 101; i <= 109; i++) { results[i] = 0; }
-
-	// alert(a_rating + " " + a_mastery + " versus " + b_rating + " " + b_mastery);
 
 	for (a_die = 1; a_die <= 20; a_die++) {
 		for (b_die = 1; b_die <= 20; b_die++) {
 			victory = find_victory(a_rating, a_mastery, a_die, b_rating, b_mastery, b_die);
 			
-			// alert("Result is "+victory);
 			results[victory] += 1;
 		}
 	}
 
-	res += '<div class="results_caption">';
-	res += 'Comparison of A (' + a_rating + (a_mastery > 0 ? 'W' + a_mastery : '') + ') versus B (' + b_rating + (b_mastery > 0 ? 'W' + b_mastery : '') + ')';
-	res += '</div>';
+	var context = {
+		a_value: '' + a_rating + (a_mastery > 0 ? 'W' + a_mastery : ''),
+		b_value: '' + b_rating + (b_mastery > 0 ? 'W' + b_mastery : ''),
 
-	res += '<table class="results">';
-	res += '<tr><th>Victory Level for A</th><th>Number</th><th>Percent</th><th>Cumulative</th></tr>';
-	for (i = 101; i <= 109; i++) {
-		res += '<tr>'
-		res += '<td>' + VICTORY_TEXT[i] + '</td>';
-		res += '<td class="num">' + results[i] + "</td>";
-		res += '<td class="percent">' + format(results[i]) + '</td>';
-		if (i == 101) {
-			res += '<td class="cumul" rowspan="4">' + format(results[101]+results[102]+results[103]+results[104])+ '</td>';
-		}
-		if (i == 105) {
-			res += '<td class="percent">' + format(results[i]) + '</td>';
-		}
-		if (i == 106) {
-			res += '<td class="cumul" rowspan="4">' + format(results[106]+results[107]+results[108]+results[109])+ '</td>';
-		}
-		res += '</tr>'
-	}
-	res += '</table>';
-	return res;
+		com_d_text: VICTORY_TEXT[101],
+		com_d_num: results[101],
+		com_d_percent: format(results[101]),
+
+		maj_d_text: VICTORY_TEXT[102],
+		maj_d_num: results[102],
+		maj_d_percent: format(results[102]),
+
+		min_d_text: VICTORY_TEXT[103],
+		min_d_num: results[103],
+		min_d_percent: format(results[103]),
+
+		mar_d_text: VICTORY_TEXT[104],
+		mar_d_num: results[104],
+		mar_d_percent: format(results[104]),
+
+		cum_d_percent: format(results[101]+results[102]+results[103]+results[104]),
+
+		tie_text: VICTORY_TEXT[105],
+		tie_num: results[105],
+		tie_percent: format(results[105]),
+
+		mar_v_text: VICTORY_TEXT[106],
+		mar_v_num: results[106],
+		mar_v_percent: format(results[106]),
+
+		min_v_text: VICTORY_TEXT[107],
+		min_v_num: results[107],
+		min_v_percent: format(results[107]),
+
+		maj_v_text: VICTORY_TEXT[108],
+		maj_v_num: results[108],
+		maj_v_percent: format(results[108]),
+
+		com_v_text: VICTORY_TEXT[109],
+		com_v_num: results[109],
+		com_v_percent: format(results[109]),
+
+		cum_v_percent: format(results[106]+results[107]+results[108]+results[109]),
+	};
+
+	results_html = template(context);
+	return results_html;
 }
 
 function format(n) {

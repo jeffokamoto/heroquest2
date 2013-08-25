@@ -3,6 +3,7 @@
 <title>HeroQuest 2 Rating Comparator</title>
 <link rel="stylesheet" type="text/css" href="hq2.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="lib/handlebars-1.0.0/handlebars.js"></script>
 <script>
 $(document).ready(function(){
 	$("#compare").click(function(){
@@ -42,8 +43,6 @@ $(document).ready(function(){
 </p>
 <div id="results"></div>
 
-<script src="hq2.js"></script>
-
 <script type="text/javascript">
 	function clear_areas() {
 		$("#error_a_rating").html('');
@@ -77,5 +76,70 @@ $(document).ready(function(){
 		return okay;
 	}
 </script>
+
+<script id="result-template" type="text/x-handlebars-template">
+<div class="results_caption">Comparison of A ({{a_value}}) versus B ({{b_value}})</div>
+<table class="results">
+  <tbody>
+    <tr>
+      <th>Victory Level for A</th>
+      <th>Number</th>
+      <th>Percent</th>
+      <th>Cumulative</th>
+    </tr>
+    <tr>
+      <td>{{com_d_text}}</td>
+      <td class="num">{{com_d_num}}</td>
+      <td class="percent">{{com_d_percent}}</td>
+      <td class="cumul" rowspan="4">{{cum_d_percent}}</td>
+    </tr>
+    <tr>
+      <td>{{maj_d_text}}</td>
+      <td class="num">{{maj_d_num}}</td>
+      <td class="percent">{{maj_d_percent}}</td>
+    </tr>
+    <tr>
+      <td>{{min_d_text}}</td>
+      <td class="num">{{min_d_num}}</td>
+      <td class="percent">{{min_d_percent}}</td>
+    </tr>
+    <tr>
+      <td>{{mar_d_text}}</td>
+      <td class="num">{{mar_d_num}}</td>
+      <td class="percent">{{mar_d_percent}}</td>
+    </tr>
+    <tr>
+      <td>{{tie_text}}</td>
+      <td class="num">{{tie_num}}</td>
+      <td class="percent">{{tie_percent}}</td>
+      <td class="percent">{{tie_percent}}</td>
+    </tr>
+    <tr>
+      <td>{{mar_v_text}}</td>
+      <td class="num">{{mar_v_num}}</td>
+      <td class="percent">{{mar_v_percent}}</td>
+      <td class="cumul" rowspan="4">{{cum_v_percent}}</td>
+    </tr>
+    <tr>
+      <td>{{min_v_text}}</td>
+      <td class="num">{{min_v_num}}</td>
+      <td class="percent">{{min_v_percent}}</td>
+    </tr>
+    <tr>
+      <td>{{maj_v_text}}</td>
+      <td class="num">{{maj_v_num}}</td>
+      <td class="percent">{{maj_v_percent}}</td>
+    </tr>
+    <tr>
+      <td>{{com_v_text}}</td>
+      <td class="num">{{com_v_num}}</td>
+      <td class="percent">{{com_v_percent}}</td>
+    </tr>
+  </tbody>
+</table>
+</script>
+
+<script src="hq2.js"></script>
+
 </body>
 </html>
